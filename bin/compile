@@ -1,5 +1,21 @@
 #!/usr/bin/env bash
 # bin/compile <build-dir> <cache-dir>
 
-echo "-----> Nothing to do."
+MONIT_BINARY="https://heroku-monit.s3.amazonaws.com/monit-5.4.tgz"
+MONIT_VENDOR="vendor/monit"
 
+GETTEXT_BINARY="http://heroku-monit.s3.amazonaws.com/gettext-0.18.tgz"
+GETTEXT_VENDOR="vendor/gettext"
+
+# Vendor Monit
+echo "-----> Downloading monit"
+echo "$1/$MONIT_VENDOR"
+mkdir -p $1/$MONIT_VENDOR
+curl $MONIT_BINARY -o - | tar -xz -C $1/$MONIT_VENDOR -f -
+
+# Vendor GNU gettext
+echo "-----> Downloading gettext"
+mkdir -p $1/$GETTEXT_VENDOR
+curl $GETTEXT_BINARY -o - | tar -xz -C $1/$GETTEXT_VENDOR -f -
+
+echo "-----> Done"
