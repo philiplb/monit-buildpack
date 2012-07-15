@@ -2,6 +2,8 @@
 
 cat << EOF
 ---
+config_vars:
+  SYSTEM_NAME: Heroku
 default_process_types:
   web: bin/boot.sh
 EOF
