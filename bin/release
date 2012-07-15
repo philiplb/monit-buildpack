@@ -7,5 +7,5 @@ addons:
 config_vars:
   PATH: /app/bin:/usr/local/bin:/usr/bin:/bin:$1/vendor/monit/bin:$1/vendor/gettext/bin
 default_process_types:
-  web: bin/start_monit.sh
+  web: bin/boot.sh
 EOF
