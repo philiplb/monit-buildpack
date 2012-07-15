@@ -1,5 +1,10 @@
 #!/usr/bin/env bash
 # bin/detect <build-dir>
 
-echo "Null"
-exit 0
+# this pack is valid for apps with a hello.txt in the root
+if [ -f $1/monitrc ]; then
+  echo "Monit"
+  exit 0
+else
+  exit 1
+fi
