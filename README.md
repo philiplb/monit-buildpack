@@ -61,6 +61,21 @@ The `SYSTEM_NAME` variable defaults to "Heroku", but you can override it if you 
 
     heroku config:add SYSTEM_NAME=Grimlock
 
+## Important: Keep Monit Alive
+
+You need to have a uptime monitor (such as [Pingdom][pingdom] or [Uptime Robot][robot]) monitoring your monit instance to make sure that it stays alive.
+
+[pingdom]: http://www.pingdom.com/
+[robot]: http://www.uptimerobot.com/
+
+For this use I suggest configuring a read-only user, e.g.
+
+    set httpd port ${PORT}
+        allow ${HTTP_USER}:${HTTP_PASSWD}
+        allow ${READ_USER}:${READ_PASSWD} read-only
+
+And of course set the `READ_USER` and `READ_PASSWD` variables…
+
 ## Working Example
 
 See the `heroku-monit` repository for a working example: <https://github.com/k33l0r/heroku-monit>
