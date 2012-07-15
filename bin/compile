@@ -25,14 +25,14 @@ cat >>$1/bin/boot.sh <<'EOF'
 #!/usr/bin/env bash
 
 mkdir -p conf.d
-mkdir -p tmp
+mkdir -p tmp/conf
 
 export SYSTEM_NAME=${1:-Heroku}
 
 for f in `ls conf.d`
 do
-  echo "Processing $f file..."
-  (cat  $f | vendor/gettext/bin/envsubst) >  $f.tmp && mv  $f.tmp  $f
+  echo "Processing conf.d/$f file..."
+  (cat  conf.d/$f | vendor/gettext/bin/envsubst) > tmp/conf/$f.tmp && mv tmp/conf/$f.tmp conf.d/$f
 done
 
 (cat monitrc | vendor/gettext/bin/envsubst) > monitrc.tmp && mv monitrc.tmp monitrc
