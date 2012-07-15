@@ -2,10 +2,6 @@
 
 cat << EOF
 ---
-addons:
-  - sendgrid:starter
-config_vars:
-  PATH: /app/bin:/usr/local/bin:/usr/bin:/bin:$1/vendor/monit/bin:$1/vendor/gettext/bin
 default_process_types:
   web: bin/boot.sh
 EOF
