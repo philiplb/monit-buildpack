@@ -21,7 +21,8 @@ curl $GETTEXT_BINARY -o - | tar -xz -C $1/$GETTEXT_VENDOR -f -
 mkdir -p $1/conf.d
 mkdir -p $1/bin
 
-cat >>bin/boot.sh <<'EOF'
+echo "-----> Generating the boot script"
+cat >>$1/bin/boot.sh <<'EOF'
 #!/usr/bin/env bash
 
 export SYSTEM_NAME=${1:-Heroku}
@@ -38,6 +39,6 @@ done
 
 vendor/monit/bin/monit -c monitrc -p tmp/.monit.pid -s tmp/.monit.state -I
 EOF
-chmod +x boot.sh
+chmod +x $1/bin/boot.sh
 
 echo "-----> Done"
