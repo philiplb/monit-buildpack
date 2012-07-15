@@ -29,9 +29,7 @@ mkdir -p tmp
 
 export SYSTEM_NAME=${1:-Heroku}
 
-CONFIG_FILES=conf.d/*
-
-for f in $CONFIG_FILES
+for f in `ls conf.d`
 do
   echo "Processing $f file..."
   (cat  $f | vendor/gettext/bin/envsubst) >  $f.tmp && mv  $f.tmp  $f
