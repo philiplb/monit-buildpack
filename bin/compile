@@ -24,8 +24,8 @@ echo "-----> Generating the boot script"
 cat >>$1/bin/boot.sh <<'EOF'
 #!/usr/bin/env bash
 
-mkdir -p $1/conf.d
-mkdir -p $1/tmp
+mkdir -p conf.d
+mkdir -p tmp
 
 export SYSTEM_NAME=${1:-Heroku}
 
