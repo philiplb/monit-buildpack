@@ -6,7 +6,6 @@ Based on the [null-buildpack][null-buildpack] by [Ryan Smith][ryandotsmith].
 
 [null-buildpack]: https://github.com/ryandotsmith/null-buildpack
 [ryandotsmith]: https://github.com/ryandotsmith
-[monit]: http://mmonit.com/monit/
 
 ## Usage:
 
@@ -62,8 +61,23 @@ The `SYSTEM_NAME` variable defaults to "Heroku", but you can override it if you 
 
     heroku config:add SYSTEM_NAME=Grimlock
 
+## Working Example
+
+See the `heroku-monit` repository for a working example: <https://github.com/k33l0r/heroku-monit>
+
 ## License
 
 MIT License. Copyright 2012 Matias Korhonen.
 
 See the LICENSE file for more details.
+
+### Dependencies
+
+[Monit][monit] is downloaded as a binary and is licensed independently under the [GNU Affero General Public License][affero].
+
+[GNU gettext][gettext] is downloaded as a binary and is licensed independently under the [GNU General Public License][gpl]
+
+[monit]: http://mmonit.com/monit/
+[gettext]: http://www.gnu.org/software/gettext/
+[gpl]: http://www.gnu.org/licenses/gpl.html
+[affero]: http://www.gnu.org/licenses/agpl.html
