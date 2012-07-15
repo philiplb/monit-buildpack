@@ -1,15 +1,28 @@
 # Heroku Buildpack: Monit
 
-Run Monit on Heroku. WIP and still undocumented.
+Run [Monit](http://mmonit.com/monit/) on Heroku.
 
 Based on the [null-buildpack][null-buildpack] by [Ryan Smith][ryandotsmith].
 
 [null-buildpack]: https://github.com/ryandotsmith/null-buildpack
 [ryandotsmith]: https://github.com/ryandotsmith
+[monit]: http://mmonit.com/monit/
 
 ## Usage:
 
-Your repository structure should look like this:
+Create a new directory and git repository:
+
+    mkdir heroku-monit
+    cd heroku-monit
+    git init .
+
+Initialise the Heroku app:
+
+    heroku create --buildpack=https://github.com/k33l0r/monit-buildpack.git
+
+Then create a `monitrc` file (see below) and push to Heroku.
+
+Your repository structure should look like this (the `conf.d` directory is optional):
 
     .
     ├── conf.d
@@ -38,3 +51,19 @@ Your repository structure should look like this:
     #
     # include /app/conf.d/*
     #
+
+You should also set the `HTTP_USER` and `HTTP_PASSWD` environment variables:
+
+    heroku config:add HTTP_USER=grimlock HTTP_PASSWD=supersecret
+
+Environment variables in the `monitrc` file and in files in the `conf.d` directory will be substituted for the actual values as long as you use the correct format (i.e. `${MY_VARIABLE}`).
+
+The `SYSTEM_NAME` variable defaults to "Heroku", but you can override it if you wish:
+
+    heroku config:add SYSTEM_NAME=Grimlock
+
+## License
+
+MIT License. Copyright 2012 Matias Korhonen.
+
+See the LICENSE file for more details.
