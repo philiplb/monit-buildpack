@@ -18,14 +18,14 @@ echo "-----> Downloading gettext"
 mkdir -p $1/$GETTEXT_VENDOR
 curl $GETTEXT_BINARY -o - | tar -xz -C $1/$GETTEXT_VENDOR -f -
 
-echo "-----> Creating default directories"
-mkdir -p $1/conf.d
 mkdir -p $1/bin
-mkdir -p $1/tmp
 
 echo "-----> Generating the boot script"
 cat >>$1/bin/boot.sh <<'EOF'
 #!/usr/bin/env bash
+
+mkdir -p $1/conf.d
+mkdir -p $1/tmp
 
 export SYSTEM_NAME=${1:-Heroku}
 
