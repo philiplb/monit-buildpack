@@ -27,7 +27,9 @@ cat >>$1/bin/boot.sh <<'EOF'
 mkdir -p conf.d
 mkdir -p tmp/conf
 
-export SYSTEM_NAME=${1:-Heroku}
+if [ "$SYSTEM_NAME" == "" ]; then
+  export SYSTEM_NAME=Heroku
+fi
 
 for f in `ls conf.d`
 do
