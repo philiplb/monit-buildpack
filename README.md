@@ -76,9 +76,15 @@ For this use I suggest configuring a read-only user, e.g.
 
 And of course set the `READ_USER` and `READ_PASSWD` variables…
 
+For more information on how to configure Monit, see the [Monit manual][man].
+
+[man]: http://mmonit.com/monit/documentation/monit.html
+
 ## Working Example
 
 See the `heroku-monit` repository for a working example: <https://github.com/k33l0r/heroku-monit>
+
+A slightly modified version of the `heroku-monit` example is publicly available at <https://monit-demo.herokuapp.com/> (User: `monit` | Password: `monit`).
 
 ## License
 
