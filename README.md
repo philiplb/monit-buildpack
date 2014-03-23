@@ -86,9 +86,19 @@ See the `heroku-monit` repository for a working example: <https://github.com/k33
 
 A slightly modified version of the `heroku-monit` example is publicly available at <https://monit-demo.herokuapp.com/> (User: `monit` | Password: `monit`).
 
+## Vulcan build commands
+
+You probably don't need this, unless you're actually working on this buildpack.
+
+```sh
+vulcan build -s ./monit-5.7 \
+-p /tmp/monit \
+-c "./configure --prefix=/tmp/monit && make && make install"
+```
+
 ## License
 
-MIT License. Copyright 2012 Matias Korhonen.
+MIT License. Copyright 2012-2014 Matias Korhonen.
 
 See the LICENSE file for more details.
 

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # bin/compile <build-dir> <cache-dir>
 
-MONIT_BINARY="https://heroku-monit.s3.amazonaws.com/monit-5.4.tgz"
+MONIT_BINARY="https://heroku-monit.s3.amazonaws.com/monit-5.7.tgz"
 MONIT_VENDOR="vendor/monit"
 
 GETTEXT_BINARY="http://heroku-monit.s3.amazonaws.com/gettext-0.18.tgz"
