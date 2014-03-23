@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
 # bin/compile <build-dir> <cache-dir>
 
-MONIT_BINARY="https://heroku-monit.s3.amazonaws.com/monit-5.7.tgz"
+MONIT_VERSION="5.7"
+MONIT_SOURCE="http://mmonit.com/monit/dist/monit-$MONIT_VERSION.tar.gz"
+MONIT_SOURCE_DIR="source/monit"
 MONIT_VENDOR="vendor/monit"
 
 GETTEXT_BINARY="http://heroku-monit.s3.amazonaws.com/gettext-0.18.tgz"
@@ -9,9 +11,15 @@ GETTEXT_VENDOR="vendor/gettext"
 
 # Vendor Monit
 echo "-----> Downloading monit"
-echo "$1/$MONIT_VENDOR"
-mkdir -p $1/$MONIT_VENDOR
-curl $MONIT_BINARY -o - | tar -xz -C $1/$MONIT_VENDOR -f -
+echo "$1/$MONIT_SOURCE_DIR"
+mkdir -p $1/$MONIT_SOURCE_DIR
+curl $MONIT_SOURCE -o - | tar -xz -C $1 -f -
+
+echo "-----> Compiling monit"
+cd $1/monit-$MONIT_VERSION
+./configure --prefix="$1/$MONIT_VENDOR" --without-pam --without-ssl
+make
+make install
 
 # Vendor GNU gettext
 echo "-----> Downloading gettext"

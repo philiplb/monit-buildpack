@@ -17,7 +17,7 @@ Create a new directory and git repository:
 
 Initialise the Heroku app:
 
-    heroku create --buildpack=https://github.com/k33l0r/monit-buildpack.git
+    heroku create --buildpack=https://github.com/matiaskorhonen/monit-buildpack.git
 
 Then create a `monitrc` file (see below) and push to Heroku.
 
@@ -82,19 +82,9 @@ For more information on how to configure Monit, see the [Monit manual][man].
 
 ## Working Example
 
-See the `heroku-monit` repository for a working example: <https://github.com/k33l0r/heroku-monit>
+See the `heroku-monit` repository for a working example: <https://github.com/matiaskorhonen/heroku-monit>
 
 A slightly modified version of the `heroku-monit` example is publicly available at <https://monit-demo.herokuapp.com/> (User: `monit` | Password: `monit`).
-
-## Vulcan build commands
-
-You probably don't need this, unless you're actually working on this buildpack.
-
-```sh
-vulcan build -s ./monit-5.7 \
--p /tmp/monit \
--c "./configure --prefix=/tmp/monit && make && make install"
-```
 
 ## License
 
