@@ -94,7 +94,7 @@ See the LICENSE file for more details.
 
 ### Dependencies
 
-[Monit][monit] is downloaded as a binary and is licensed independently under the [GNU Affero General Public License][affero].
+[Monit][monit] is downloaded as source code and built on Heroku and is licensed independently under the [GNU Affero General Public License][affero].
 
 [GNU gettext][gettext] is downloaded as a binary and is licensed independently under the [GNU General Public License][gpl]
 
