@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # bin/compile <build-dir> <cache-dir>
 
-MONIT_VERSION="5.8"
+MONIT_VERSION="5.9"
 MONIT_SOURCE="http://mmonit.com/monit/dist/monit-$MONIT_VERSION.tar.gz"
 MONIT_SOURCE_DIR="source/monit"
 MONIT_VENDOR="vendor/monit"
@@ -9,27 +9,66 @@ MONIT_VENDOR="vendor/monit"
 GETTEXT_BINARY="http://heroku-monit.s3.amazonaws.com/gettext-0.18.tgz"
 GETTEXT_VENDOR="vendor/gettext"
 
+BUILD_DIR=$1
+CACHE_DIR=$2
+CACHE_BUILD_VERSION_FILE="$CACHE_DIR/BUILD_VERSION"
+
+if [ ! -d $CACHE_DIR ]; then
+  echo "-----> Creating cache dir ($CACHE_DIR) for optimisation of future builds/pushes"
+  mkdir $CACHE_DIR
+fi
+
+function check_requires_rebuild {
+  echo "-----> Checking environment for presence of installed Monit"
+
+  # Pre-existing build?
+  if [ -e $CACHE_BUILD_VERSION_FILE ]; then
+    CACHE_BUILD_VERSION=`cat $CACHE_DIR/BUILD_VERSION`
+
+    if [ "$CACHE_BUILD_VERSION" == "$MONIT_VERSION" ]; then
+      echo "-----> Existing and up-to-date app detected (v$CACHE_BUILD_VERSION). No need to re-compile"
+      cp -r $CACHE_DIR/vendor $BUILD_DIR/vendor
+      cp -r $CACHE_DIR/bin $BUILD_DIR/bin
+      echo "-----> Done"
+      exit 0
+    fi
+
+    echo "-----> Existing environment will be modified (from v$CACHE_BUILD_VERSION), installing Monit v$MONIT_VERSION"
+
+  else
+    echo "-----> New environment detected, installing Monit v$MONIT_VERSION"
+  fi
+}
+
+# Check if source exists, if it does - don't re-build!
+# RECOMPILE_MONIT environment config can be set to override
+if [ $RECOMPILE_MONIT != 1 ]; then
+  check_requires_rebuild
+else
+  echo "-----> Explicit re-build requested, re-building"
+fi
+
 # Vendor Monit
 echo "-----> Downloading monit"
-echo "$1/$MONIT_SOURCE_DIR"
-mkdir -p $1/$MONIT_SOURCE_DIR
-curl $MONIT_SOURCE -o - | tar -xz -C $1 -f -
+echo "$BUILD_DIR/$MONIT_SOURCE_DIR"
+mkdir -p $BUILD_DIR/$MONIT_SOURCE_DIR
+curl $MONIT_SOURCE -o - | tar -xz -C $BUILD_DIR -f -
 
 echo "-----> Compiling monit"
-cd $1/monit-$MONIT_VERSION
-./configure --prefix="$1/$MONIT_VENDOR" --without-pam
+cd $BUILD_DIR/monit-$MONIT_VERSION
+./configure --prefix="$BUILD_DIR/$MONIT_VENDOR" --without-pam
 make
 make install
 
 # Vendor GNU gettext
 echo "-----> Downloading gettext"
-mkdir -p $1/$GETTEXT_VENDOR
-curl $GETTEXT_BINARY -o - | tar -xz -C $1/$GETTEXT_VENDOR -f -
+mkdir -p $BUILD_DIR/$GETTEXT_VENDOR
+curl $GETTEXT_BINARY -o - | tar -xz -C $BUILD_DIR/$GETTEXT_VENDOR -f -
 
-mkdir -p $1/bin
+mkdir -p $BUILD_DIR/bin
 
 echo "-----> Generating the boot script"
-cat >>$1/bin/boot.sh <<'EOF'
+cat >>$BUILD_DIR/bin/boot.sh <<'EOF'
 #!/usr/bin/env bash
 
 mkdir -p conf.d
@@ -49,6 +88,11 @@ done
 
 vendor/monit/bin/monit -c monitrc -p tmp/.monit.pid -s tmp/.monit.state -I -v
 EOF
-chmod +x $1/bin/boot.sh
+chmod +x $BUILD_DIR/bin/boot.sh
+
+# Cache build for future
+echo $MONIT_VERSION > $CACHE_BUILD_VERSION_FILE
+cp -r $BUILD_DIR/vendor $CACHE_DIR/vendor
+cp -r $BUILD_DIR/bin $CACHE_DIR/bin
 
 echo "-----> Done"
