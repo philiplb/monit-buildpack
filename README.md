@@ -2,11 +2,6 @@
 
 Run [Monit](http://mmonit.com/monit/) on Heroku.
 
-Based on the [null-buildpack][null-buildpack] by [Ryan Smith][ryandotsmith].
-
-[null-buildpack]: https://github.com/ryandotsmith/null-buildpack
-[ryandotsmith]: https://github.com/ryandotsmith
-
 ## Usage:
 
 Create a new directory and git repository:
@@ -88,7 +83,7 @@ A slightly modified version of the `heroku-monit` example is publicly available 
 
 ## License
 
-MIT License. Copyright 2012-2014 Matias Korhonen.
+MIT License. Copyright 2012-2014 Matias Korhonen & contributors.
 
 See the LICENSE file for more details.
 
