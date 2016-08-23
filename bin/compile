@@ -2,7 +2,7 @@
 # bin/compile <build-dir> <cache-dir>
 
 MONIT_VERSION="5.9"
-MONIT_SOURCE="http://mmonit.com/monit/dist/monit-$MONIT_VERSION.tar.gz"
+MONIT_SOURCE="https://mmonit.com/monit/dist/monit-$MONIT_VERSION.tar.gz"
 MONIT_SOURCE_DIR="source/monit"
 MONIT_VENDOR="vendor/monit"
 
